@@ -11,12 +11,12 @@ with Bukkit and General Java
 # Gradle
 - Add it in your root build.gradle at the end of repositories:
     ```xml
-	    allprojects {
-		repositories {
-			...
-			maven { url 'https://jitpack.io' }
-		}
-	    }
+        allprojects {
+        	repositories {
+        		...
+        		maven { url 'https://jitpack.io' }
+        	}
+        }
     ```
 - Dependency
     ```xml
@@ -37,7 +37,7 @@ with Bukkit and General Java
     ```
 - Dependency
     ```xml
-    	<dependency>
+    <dependency>
 	    <groupId>com.github.cyklon73</groupId>
 	    <artifactId>Cytils</artifactId>
 	    <version>Tag</version>
@@ -48,19 +48,19 @@ with Bukkit and General Java
 # SBT
 - Add it in your build.sbt at the end of resolvers:
     ```xml
-     resolvers += "jitpack" at "https://jitpack.io"
+        resolvers += "jitpack" at "https://jitpack.io"
     ```
 - Dependency
     ```xml
-    libraryDependencies += "com.github.cyklon73" % "Cytils" % "Tag"	
+        libraryDependencies += "com.github.cyklon73" % "Cytils" % "Tag"	
     ```
 # Leiningen    
 - Add it in your project.clj at the end of repositories:
     ```xml
-    :repositories [["jitpack" "https://jitpack.io"]]
+        :repositories [["jitpack" "https://jitpack.io"]]
     ```
 - Dependency
     ```xml
-    :dependencies [[com.github.cyklon73/Cytils "Tag"]]	
+        :dependencies [[com.github.cyklon73/Cytils "Tag"]]	
     ```
     
