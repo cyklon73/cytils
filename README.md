@@ -37,12 +37,11 @@ with Bukkit and General Java
     ```
 - Dependency
     ```xml
-    <dependency>
-	    <groupId>com.github.cyklon73</groupId>
-	    <artifactId>Cytils</artifactId>
-	    <version>Tag</version>
-	</dependency>
-
+        <dependency>
+    	    <groupId>com.github.cyklon73</groupId>
+    	    <artifactId>Cytils</artifactId>
+    	    <version>Tag</version>
+    	</dependency>
     ```
     
 # SBT
