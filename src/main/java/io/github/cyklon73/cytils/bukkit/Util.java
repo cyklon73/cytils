@@ -6,6 +6,10 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 
+import java.nio.charset.StandardCharsets;
+import java.text.DecimalFormat;
+import java.util.Base64;
+
 public class Util {
 
     public static String rotationToString(Rotation rotation) {
@@ -164,6 +168,107 @@ public class Util {
     public static void removeAllPassangers(Entity e) {
         for (Entity p : e.getPassengers()) {
             e.removePassenger(p);
+        }
+    }
+
+    public static class BASE64 {
+
+        public static String decode(String input) {
+            byte[] decoded = Base64.getDecoder().decode(input);
+            return new String(decoded, StandardCharsets.UTF_8);
+        }
+
+        public static String encode(String input) {
+            byte[] arg = input.getBytes(StandardCharsets.UTF_8);
+            return Base64.getEncoder().encodeToString(arg);
+        }
+    }
+
+    public static class EDSF {
+        public static String encode(String input) {
+            if (input == null) {
+                return null;
+            }
+            String out = BASE64.encode(input);
+            out = BASE64.encode(out);
+            out = BASE64.encode(out);
+            out = BASE64.encode(out);
+            out = BASE64.encode(out);
+            out = BASE64.encode(out);
+            out = BASE64.encode(out);
+            return out;
+        }
+
+        public static String decode(String input) {
+            if (input == null) {
+                return null;
+            }
+            String out = BASE64.decode(input);
+            out = BASE64.decode(out);
+            out = BASE64.decode(out);
+            out = BASE64.decode(out);
+            out = BASE64.decode(out);
+            out = BASE64.decode(out);
+            out = BASE64.decode(out);
+            return out;
+        }
+    }
+
+    public static class FILESIZE {
+        public static final double
+                KILO = 1000L,
+                KIBI = 1024L,
+                MEGA = KILO * KILO,
+                MEBI = KIBI * KIBI,
+                GIGA = MEGA * KILO,
+                GIBI = MEBI * KIBI,
+                TERA = GIGA * KILO,
+                TEBI = GIBI * KIBI,
+                PETA = TERA * KILO,
+                PEBI = TEBI * KIBI,
+                EXA = PETA * KILO,
+                EXBI = PEBI * KIBI;
+
+        private static final DecimalFormat df = new DecimalFormat("#.##");
+
+        public static String binaryBased(long size) {
+            if (size < 0) {
+                throw new IllegalArgumentException("Argument cannot be negative");
+            } else if (size < KIBI) {
+                return df.format(size).concat("B");
+            } else if (size < MEBI) {
+                return df.format(size / KIBI).concat("KiB");
+            } else if (size < GIBI) {
+                return df.format(size / MEBI).concat("MiB");
+            } else if (size < TEBI) {
+                return df.format(size / GIBI).concat("GiB");
+            } else if (size < PEBI) {
+                return df.format(size / TEBI).concat("TiB");
+            } else if (size < EXBI) {
+                return df.format(size / PEBI).concat("PiB");
+            } else {
+                return df.format(size / EXBI).concat("EiB");
+            }
+        }
+
+        public static String decimalBased(long size) {
+            if (size < 0) {
+                throw new IllegalArgumentException("Argument cannot be negative");
+            } else if (size < KILO) {
+                return df.format(size).concat(" B");
+            } else if (size < MEGA) {
+                return df.format(size / KILO).concat(" KB");
+            } else if (size < GIGA) {
+                return df.format(size / MEGA).concat(" MB");
+            } else if (size < TERA) {
+                return df.format(size / GIGA).concat(" GB");
+            } else if (size < PETA) {
+                return df.format(size / TERA).concat(" TB");
+            } else if (size < EXA) {
+                return df.format(size / PETA).concat(" PB");
+            } else {
+                return df.format(size / EXA).concat(" EB");
+            }
         }
     }
 

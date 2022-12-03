@@ -1,0 +1,1 @@
+mvn install:install-file -Dfile=D:\Development\Java\Libraries\Cytils\out\artifacts\Cytils\Cytils.jar -DgroupId=io.github.cyklon73 -DartifactId=cytils -Dversion=1.0 -Dpackaging=jar -DgeneratePom=true

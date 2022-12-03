@@ -1,7 +1,6 @@
 package io.github.cyklon73.cytils.api.discord.webhook;
 
 import io.github.cyklon73.cytils.api.discord.comp.Image;
-
 import io.github.cyklon73.cytils.api.discord.comp.User;
 import io.github.cyklon73.cytils.api.discord.comp.embed.Embed;
 import io.github.cyklon73.cytils.api.discord.comp.embed.Field;
@@ -9,8 +8,9 @@ import io.github.cyklon73.cytils.api.discord.comp.embed.Footer;
 import io.github.cyklon73.cytils.api.discord.comp.embed.Thumbnail;
 import io.github.cyklon73.cytils.api.discord.comp.mentions.Mention;
 import io.github.cyklon73.cytils.api.discord.comp.mentions.UserMention;
+import io.github.cyklon73.cytils.api.discord.exceptions.ConnectException;
 import io.github.cyklon73.cytils.json.JSONObject;
-import io.github.cyklon73.cytils.utils.WebHelper;
+import io.github.cyklon73.cytils.utils.Util;
 
 import javax.net.ssl.HttpsURLConnection;
 import java.io.IOException;
@@ -24,8 +24,16 @@ public class Webhook {
 
     private final URL webhookUrl;
 
-    public Webhook(URL webhookUrl) {
+    private boolean connected;
+
+    public Webhook(URL webhookUrl) throws ConnectException {
+        if (Util.removeSpaces(webhookUrl.toString()) == "") throw new ConnectException("cant connect to " + webhookUrl);
         this.webhookUrl = webhookUrl;
+        this.connected = true;
+    }
+
+    public void disconnect() {
+        connected = false;
     }
 
     /**
@@ -40,6 +48,7 @@ public class Webhook {
      * @throws IllegalArgumentException If no content component has been added or if you added too many embeds (too many = more than 10)
      */
     public void send(Message message, User user, Embed[] embeds) {
+        if (!connected) return;
         if ((message == null) && ((embeds == null) || (embeds.length <= 0))) throw new IllegalArgumentException("You must use at least 1 content component");
 
         JSONObject json = new JSONObject();

@@ -1,9 +1,155 @@
 package io.github.cyklon73.cytils.utils;
 
+import java.awt.*;
+import java.io.File;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Util {
 
+
+    public static Integer[] splitInt(int sum, int max) {
+        ListArray<Integer> array = new ListArray<>();
+        while (sum > 0) {
+            if (sum >= max) {
+                array.add(max);
+                sum -= max;
+            } else {
+                array.add(sum);
+                break;
+            }
+        }
+        return array.toArray(new Integer[array.getSize()]);
+    }
+
+    public static String[] splitStringInLines(String s, int max) {
+        String[] lines = s.split("\n");
+        ListArray<String> result = new ListArray<>();
+        String[] currPart = {null, null, null};
+        int currInt = 0;
+        for (String line : lines) {
+            currPart[currInt] = line;
+            currInt++;
+            if (currInt == 3) {
+                currInt = 0;
+                f1(result, currPart);
+                Arrays.fill(currPart, null);
+            }
+        }
+        f1(result, currPart);
+        return result.toArray(new String[result.getSize()]);
+    }
+
+    private static void f1(ListArray<String> result, String[] currPart) {
+        StringBuilder s1 = new StringBuilder();
+        for (int i2 = 0; i2 < currPart.length; i2++) {
+            if (currPart[i2] != null) {
+                s1.append(currPart[i2]);
+                if (i2 != currPart.length-1) s1.append("\n");
+            }
+        }
+        result.add(s1.toString());
+    }
+    public static File fileFromURL(URL url) {
+        return new File(url.getPath().replace("%20", " "));
+    }
+    public static <T> T[] removeElementFromArray(T[] arr, int index)
+    {
+
+        if (arr == null || index < 0
+                || index >= arr.length) {
+
+            return arr;
+        }
+
+        T[] anotherArray = (T[]) new Object[arr.length - 1];
+
+        for (int i = 0, k = 0; i < arr.length; i++) {
+
+            if (i == index) {
+                continue;
+            }
+
+            anotherArray[k++] = arr[i];
+        }
+
+        return anotherArray;
+    }
+    public static void openUrl(String url) {
+        try {
+            openUrl(new URI(url));
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void openUrl(URI url) {
+        try {
+            Desktop.getDesktop().browse(url);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static <T> boolean listContains(T[] list, T item) {
+        boolean b = false;
+        for (T t : list) {
+            if (t.equals(item)) {
+                b = true;
+                break;
+            }
+        }
+        return b;
+    }
+    public static void waitFor(BooleanExpression expression) {
+        waitFor(expression, 50);
+    }
+
+    public static void waitFor(BooleanExpression expression, long updateDelay) {
+        while (!expression.run()) {
+            try {
+                Thread.sleep(updateDelay);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    public static <T> T[] arrayListToArray(ArrayList<T> arrayList) {
+        T[] array = (T[]) new Object[arrayList.size()];
+        for (int i = 0; i < array.length; i++) {
+            array[i] = arrayList.get(i);
+        }
+        T[] a;
+        return array;
+    }
+    public static Object[] parseArray(String s) {
+        s = removeSpaces(s);
+
+        ArrayList<String> values = new ArrayList<String>();
+        String[] currentValue = new String[] {""};
+        boolean[] flag = new boolean[] {false, false};
+        int[] openArrays = new int[] {0};
+        runForChar(s, (c) -> {
+            if (c == '[') openArrays[0]++;
+            if (c == ']') openArrays[0]--;
+            if (openArrays[0] == 1) {
+                if (c == ',') {
+                    values.add(currentValue[0]);
+                    currentValue[0] = "";
+                    flag[0] = false;
+                } else flag[0] = true;
+
+            } else flag[0] = true;
+
+            if (flag[0]) currentValue[0] += c;
+        });
+        return values.toArray();
+    }
     public static <T> T nonNullOrDefault(T obj, T def) {
         if (obj == null)
             return def;

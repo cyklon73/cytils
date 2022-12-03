@@ -1,10 +1,7 @@
-package io.github.cyklon73.cytils.bukkit;
+package io.github.cyklon73.cytils.utils;
 
-import org.bukkit.Location;
-import org.bukkit.World;
-import org.bukkit.util.BlockVector;
+
 import org.bukkit.util.NumberConversions;
-import org.bukkit.util.Vector;
 
 import java.util.ArrayList;
 
@@ -14,10 +11,6 @@ public class Vector3 {
     public double y;
     public double z;
 
-
-    public Vector3() {
-        this(0, 0, 0);
-    }
     public Vector3(double x, double y, double z) {
         this.x = x;
         this.y = y;
@@ -26,11 +19,7 @@ public class Vector3 {
 
     @Override
     public String toString() {
-        return getX() + "," + getY() + "," + getZ();
-    }
-
-    public String toBlockCordString() {
-        return getBlockX() + "," + getBlockY() + "," + getBlockZ();
+        return x + "," + y + "," + z;
     }
 
     public static Vector3 parseVector3(String s) {
@@ -40,14 +29,6 @@ public class Vector3 {
 
     public static Vector3 parseVector3(String s1, String s2, String s3) {
         return new Vector3(Float.parseFloat(s1), Float.parseFloat(s2), Float.parseFloat(s3));
-    }
-
-    public static Vector3 parseVector3(Vector vec) {
-        return new Vector3(vec.getX(), vec.getY(), vec.getZ());
-    }
-
-    public static Vector3 parseVector3(Location loc) {
-        return new Vector3(loc.getX(), loc.getY(), loc.getZ());
     }
 
     public static Vector3 parseVector3(String[] s) {
@@ -62,26 +43,6 @@ public class Vector3 {
         return new Vector3(s[0], s[1], s[2]);
     }
 
-    public Vector toVector() {
-        return new Vector(x, y, z);
-    }
-
-    public Location toLocation(World world) {
-        return new Location(world, x ,y, z);
-    }
-
-    public Location toLocation(World world, float yaw, float pitch) {
-        return new Location(world, x, y, z, yaw, pitch);
-    }
-
-    public BlockVector toBlockVector() {
-        return new BlockVector(x, y, z);
-    }
-
-
-    public Vector3 subtract(double x, double y, double z) {
-        return this.subtract(new Vector3(x, y, z));
-    }
     public Vector3 subtract(Vector3 vec) {
         x -= vec.x;
         y -= vec.y;
@@ -101,16 +62,12 @@ public class Vector3 {
         return new Vector3(y*vec.z-z*vec.y, z*vec.x-x*vec.z, x*vec.y-y*vec.x);
     }
 
-    public Vector3 round() {
-        return new Vector3(Math.round(x), Math.round(y), Math.round(z));
-    }
-
     public double scalar(Vector3 vec) {
         return x*vec.x+y*vec.y+z*vec.z;
     }
 
     public double angle(Vector3 vec) {
-        return Math.acos(clone().normalize().scalar(vec.clone().normalize()));
+        return java.lang.Math.acos(clone().normalize().scalar(vec.clone().normalize()));
     }
 
     public Vector3 normalize() {
@@ -129,14 +86,10 @@ public class Vector3 {
         return a;
     }
 
-    public Vector3 add (double x, double y, double z) {
-        return this.add(new Vector3(x, y, z));
-    }
-    public Vector3 add (Vector3 v) {
+    public void add (Vector3 v) {
         x += v.x;
         y += v.y;
         z += v.z;
-        return this;
     }
 
     @Override
@@ -155,24 +108,12 @@ public class Vector3 {
         return x;
     }
 
-    public int getBlockX() {
-        return NumberConversions.floor(x);
-    }
-
     public double getY() {
         return y;
     }
 
-    public int getBlockY() {
-        return NumberConversions.floor(y);
-    }
-
     public double getZ() {
         return z;
-    }
-
-    public int getBlockZ() {
-        return NumberConversions.floor(z);
     }
 
     public Vector3 setX(int x) {
@@ -221,7 +162,7 @@ public class Vector3 {
     }
 
     public double length() {
-        return Math.sqrt(NumberConversions.square(x) + NumberConversions.square(y) + NumberConversions.square(z));
+        return java.lang.Math.sqrt(NumberConversions.square(x) + NumberConversions.square(y) + NumberConversions.square(z));
     }
 }
 

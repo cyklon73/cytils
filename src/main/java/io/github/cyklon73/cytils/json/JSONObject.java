@@ -52,4 +52,12 @@ public class JSONObject {
     private String quote(String string) {
         return "\"" + string + "\"";
     }
+
+    public static JSONObject fromJsonObject(org.json.JSONObject object) {
+        JSONObject jsonObject = new JSONObject();
+        for (String key : object.keySet()) {
+            jsonObject.put(key, object.get(key));
+        }
+        return jsonObject;
+    }
 }

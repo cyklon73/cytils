@@ -16,7 +16,11 @@ public class ItemBuilder {
     private ItemStack item;
 
     public ItemBuilder(Material material) {
-        item = new ItemStack(material);
+        this(new ItemStack(material));
+    }
+
+    public ItemBuilder(ItemStack stack) {
+        item = stack;
         meta = item.getItemMeta();
     }
 
