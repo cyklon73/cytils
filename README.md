@@ -1,6 +1,6 @@
 # Cytils
 
-[![Build Status](https://travis-ci.org/joemccann/dillinger.svg?branch=master)](https://cyklonDevelopment.ml)
+[![Build Status](https://travis-ci.org/joemccann/dillinger.svg?branch=master)](https://cyklon-development.ml)
 
 Cytils is a Java library with various utilities for development,
 with Bukkit and General Java
